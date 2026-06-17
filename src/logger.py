@@ -5,10 +5,10 @@ import logging
 import sys
 from pathlib import Path
 from pythonjsonlogger import jsonlogger
-from config.config import LOG_DIR, LOG_LEVEL, LOG_FORMAT
+from config.config import LOGS_DIR, LOG_LEVEL, LOG_FORMAT
 
 # Create logs directory if it doesn't exist
-LOG_DIR.mkdir(exist_ok=True)
+LOGS_DIR.mkdir(exist_ok=True)
 
 
 def setup_logger(name: str) -> logging.Logger:
@@ -31,7 +31,7 @@ def setup_logger(name: str) -> logging.Logger:
     console_handler.setFormatter(console_formatter)
     
     # File handler with JSON format
-    file_handler = logging.FileHandler(LOG_DIR / f"{name}.log")
+    file_handler = logging.FileHandler(LOGS_DIR / f"{name}.log")
     file_handler.setLevel(getattr(logging, LOG_LEVEL))
     file_formatter = jsonlogger.JsonFormatter()
     file_handler.setFormatter(file_formatter)

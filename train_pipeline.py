@@ -57,12 +57,20 @@ def main():
         
         processor = DataProcessor()
         
+        # Remove duplicates first
+        df_raw = processor.remove_duplicates(df_raw)
+        
         # Prepare data for processing
         X = df_raw.drop('species', axis=1)
         y = df_raw['species']
         
         # Get feature names
         feature_names = X.columns.tolist()
+        
+        # Encode target variable
+        from sklearn.preprocessing import LabelEncoder
+        le = LabelEncoder()
+        y_encoded = le.fit_transform(y)
         
         # Process features
         X_processed = processor.process_pipeline(
@@ -89,7 +97,7 @@ def main():
         
         # Split data
         X_train, X_test, y_train, y_test = trainer.train_test_split_data(
-            X_processed, y
+            X_processed, y_encoded
         )
         
         # Train multiple models

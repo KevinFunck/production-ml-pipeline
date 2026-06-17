@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  ml-pipeline:
+    build: .
+    container_name: production-ml-pipeline
+    environment:
+      - LOG_LEVEL=INFO
+      - ENVIRONMENT=production
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
